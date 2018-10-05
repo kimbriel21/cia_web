@@ -36,7 +36,7 @@ Vue.component('side-bar', require('./views/layout/side-bar.vue'));
 
 Vue.component('search-field', require('./views/component/search-field.vue'));
 Vue.component('table-paginate', require('./views/component/table-paginate.vue'));
-Vue.component('paginate', require('./views/component/pagination.vue'));
+Vue.component('pagination', require('./views/component/pagination.vue'));
 
 Vue.component('add-member-dialog', require('./views/module/member/action/add.vue'));
 import router from './routes';

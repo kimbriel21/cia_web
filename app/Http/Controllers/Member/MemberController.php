@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\Member;
 
+use Excel;
 
 use App\Http\Controllers\BaseController;
 use App\Http\Controllers\Controller;
 use App\member;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+
+
 
 class MemberController extends BaseController implements MemberControllerInterface
 {
@@ -35,7 +38,10 @@ class MemberController extends BaseController implements MemberControllerInterfa
     {
         $this->loadWithRelatedModel();
         $this->_search();
+
         return $this->getResultList($this->model->latest());
+
+
     }
 
     public function store(Request $request)
@@ -117,6 +123,24 @@ class MemberController extends BaseController implements MemberControllerInterfa
             'address' => 'required',
         ]);
         return $validatedData;
+    }
+
+
+    public function downloadExcel(Request $request)
+    {
+        $this->_search();
+
+        Excel::create('Member', function($excel){
+
+            $excel->sheet('123', function($sheet){
+
+
+                $sheet->fromModel($this->model->get());
+
+            });
+
+        })->download('xls');
+
     }
 
 

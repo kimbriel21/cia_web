@@ -20,5 +20,7 @@ Route::get('/home', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index');
+Route::get('/member/export', 'Member\MemberController@downloadExcel');
 Route::resource('/member', 'Member\MemberController');
-Route::resource('/ministry', 'Member\MemberController');
+
+Route::resource('/ministry', 'Ministry\MemberController');

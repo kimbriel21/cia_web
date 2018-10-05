@@ -10,6 +10,7 @@
                     <add-member-dialog
                             style="display: inline-block; float: right; margin-bottom: 20px;">
                     </add-member-dialog>
+                    <el-button type="success" @click="downloadExcel" style="display: inline-block; float: right; margin-right: 5px">Export to Excel</el-button>
                 </span>
         </el-card >
         <el-card shadow="always" style="margin-top: 10px;">
@@ -21,6 +22,8 @@
                     :set-search-date-month="setSearchDateMonth">
 
             </search-field>
+
+
 
             <table-paginate
                     :table-data="tableData"
@@ -43,9 +46,7 @@
 </template>
 
 <script>
-    import Pagination from "../../component/pagination";
     export default {
-        components: {Pagination},
         data() {
             return {
                 tableData: [],
@@ -141,6 +142,19 @@
                 this.queryString.page = page;
                 this.queryString.limit = limit;
                 this.getList();
+            },
+            downloadExcel(){
+                let newWindow = window.open();
+                axios
+                    .get('/member/export')
+                    .then(response =>
+                    {
+                        newWindow.location = 'http://' + window.location.hostname + '/member/export?' + $.param(this.queryString) + '&showAll=1';
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    .finally(() => this.loading = false);
             }
         },
         created() {
